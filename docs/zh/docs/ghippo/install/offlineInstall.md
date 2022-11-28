@@ -14,9 +14,13 @@ tar zxvf ghippo.bundle.tar
 
 ```shell
 tmp_dir=$(mktemp -d)
+
 git clone https://github.com/DaoCloud/charts-syncer.git ${tmp_dir}
+
 cp ${tmp_dir}/charts-syncer /usr/local/bin/charts-syncer
+
 chmod +x /usr/local/bin/charts-syncer
+
 rm -rf ${tmp_dir}
 ```
 
@@ -61,21 +65,21 @@ docker load -i images.tar
 - 配置 ghippo helm 仓库
 
 ```shell
-heml repo add ghippo-local https://{harbor url}/chartrepo/ghippo
+heml repo add ghippo https://{harbor url}/chartrepo/ghippo
 
-helm repo update ghippo-local #helm版本过低会导致失败，若失败，请尝试执行helm update repo
+helm repo update ghippo # helm版本过低会导致失败，若失败，请尝试执行helm update repo
 ```
 
 - 选择您想安装的 ghippo 版本（🔥建议安装最新版本）
 
 ```shell
-helm search repo ghippo-local/ghippo --versions
+helm search repo ghippo/ghippo --versions
 ```
 
 ```
-[root@master ~]# helm search repo ghippo-local/ghippo --versions
+[root@master ~]# helm search repo ghippo/ghippo --versions
 NAME                   CHART VERSION  APP VERSION  DESCRIPTION
-ghippo-local/ghippo  0.9.0          v0.9.0       A Helm chart for GHippo
+ghippo/ghippo  0.9.0          v0.9.0       A Helm chart for GHippo
 ...
 ```
 
@@ -90,7 +94,7 @@ helm get values ghippo -n ghippo-system -o yaml > bak.yaml
 - 执行 helm upgrade
 
 ```
-helm upgrade ghippo ghippo-local/ghippo \
+helm upgrade ghippo ghippo/ghippo \
 -n ghippo-system \
 -f ./bak.yaml \
 --version 0.9.0
